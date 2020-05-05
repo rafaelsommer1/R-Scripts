@@ -4,9 +4,64 @@ author: "Rafael Sommer"
 date: "05/05/2020"
 output: html_document
 ---
+# Clinical Trials common used scripts
+This document will contain code that exemplifies common clinical trial practices as well as templates for personal designs. I used some of the Clinical Trial DataCamp course to extract some of the code, and libraries.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+```{r, echo = FALSE}
+library(compareGroups)
+library(ggplot2)
+library(blockrand)
+```
+Libraries used and its version
+- Package compareGroups version 4.4.1
+- Package blockrand version 1.5
+
+# Randomization
+## Simple and block randomization
+This do not take any extra factors in account to assign groups
+```{r}
+treatment <- c("A","B")
+# list <- sample(treatment, x, replace = TRUE)
+# cat(list,sep="\n") # Command to show concatenated list
+```
+This method, however, can generate unbalanced group for small sample size, in order to correct for that, we may choose a block randomization design:
+```{r}
+# Template
+num = 10 # Minimum number of subjects
+numArm = 2 # Number of treatments arms
+x = 2 # Block size (randomizes x * numArm)
+y = 2 # Block size (same, you can use several sizes for random diferent blocks)
+block.list <- blockrand(n = num, num.levels = numArm, block.sizes = c(x,y))
+
+# E.G
+block.list <- blockrand(n = 50, num.levels = 2, block.sizes = c(2,2))
+head(block.list)
+# To make the end of each block unpredictable, you may allow blocks to have different sizes at random, for eg:
+block.list <- blockrand(n = 20, num.levels = 2, block.sizes = c(1,2))
+# You can see that some blocks have a size = 2 (n*1) or 4 (n*2)
+block.list
+```
+## Stratified randomization
+This is helpful if you want to balance the treatment arms for certain known variable, randomization carries a different block for each stratified group,
+
+ 
 
 
+# Sample size and power calculation
+
+
+
+
+
+
+# Dataset Exploration
+We will use the compareGroups library which facilitate comparing for baseline group characteristics and building tables. Let´s do a basic baseline comparation example:
+```{r, echo = TRUE}
+# Template
+#baseline_info <- compareGroups(group ~ x1 + x2 + ... + xn, data = dataset)
+#baseline_table <- createTable(baseline_info, show.ratio = F, show.p.overall = F)
+#baseline_table
+```
