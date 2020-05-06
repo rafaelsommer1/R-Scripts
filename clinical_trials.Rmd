@@ -15,9 +15,9 @@ library(compareGroups)
 library(ggplot2)
 library(blockrand)
 ```
-Libraries used and its version
-- Package compareGroups version 4.4.1
-- Package blockrand version 1.5
+### Libraries used and its version
+#### - Package compareGroups version 4.4.1
+#### - Package blockrand version 1.5
 
 # Randomization
 ## Simple and block randomization
@@ -45,17 +45,92 @@ block.list <- blockrand(n = 20, num.levels = 2, block.sizes = c(1,2))
 block.list
 ```
 ## Stratified randomization
-This is helpful if you want to balance the treatment arms for certain known variable, randomization carries a different block for each stratified group,
+This is helpful if you want to balance the treatment arms for certain known variable, randomization carries a separate randomization for each stratified group, so for example:
 
- 
+```{r}
+diabetic <- blockrand(n = 20, num.levels = 2, block.sizes = c(1,2,3), 
+                      stratum = "diabetic")
+non_diabetic <- blockrand(n = 20, num.levels = 2, block.sizes = c(1,2,3), 
+                      stratum = "non_diabetic")
+
+table(diabetic$treatment)
+table(non_diabetic$treatment)
+```
+This code generate two separated lists for each strat, so included patients will be assigned to one or other depending on diabetes status.
 
 
 # Sample size and power calculation
+## Most basic sample size calculations include normally distributed continuos endpoints and proportion endpoints. Those can be calculated as the following: 
+```{r}
+# Differences in mean change template
+d = 1 # True difference in means (effect size)
+s = 0.5 # Expected mean variability (standard deviation)
+b = 0.8 # Desired power (1-b)
+a = 0.05 # Desired significance level, type I error prob (1-a)
+t = "two.sample" # Type of t-test, could be one.sample, two.sample, paired
+alt = "two.sided" # one.sided or two.sided alternative hypotesis
+# Example
+samplesize <- power.t.test(delta = d, 
+                           sd = s, 
+                           power = b, 
+                           sig.level = a,
+                           type = t,
+                           alternative = alt)
+samplesize
+# Maybe useful to plot a range of powers for a range of effect sizes
+drange = seq(0.25,1.5, by=0.15)
+sample_calc <- NULL
+for(i in 1:length(drange)){
+  sample_calc[i] <- power.t.test(delta = drange[i], sd = 0.5, power = 0.8)$n
+}
+samples_table <- data.frame(n = sample_calc, effect_size = drange)
 
+ggplot(data=samples_table, aes(x=effect_size, y=n)) + 
+  geom_line() + 
+  geom_point() + 
+  ggtitle("Sample Size Scenarios") + 
+  xlab("Treatment Difference") +
+  ylab("Patients per Group")
 
+# Differences in proportions (2 groups) template
+p1 = 0.3
+p2 = 0.1
+a = 0.05
+b = 0.8 
+alt = "two.sided"
+  
+power.prop.test(p1 = p1 , p2 = p2 , 
+                sig.level = a,
+                power = b ,
+                alternative = alt)
 
+```
+## More complex sample size calculations:
 
+```{r}
+# Sample size calculation for correlated data (nested, longitudinal)
+N = "x" # Total subjects  
+n = 3 # Number for repeated measures / correlated measures
+sig2within = 0.2 # Variability for the within-subject
+sig2between = 0.15 # Estimated variability between-subjects
+mindiff = 0.35 # Minimun treatment effect-size
+alpha = 0.05 # significance level
+pow = 0.8 # desired power
+tau = 1 # trial total duration
+time = 1 # tau unit (for 2 year trial use tau = 2 ; time = 12)
 
+sig2 = time*(n-1)*sig2within/(tau^2*n*(n+1))+sig2between
+sig2
+
+N = (qnorm(1-alpha/2)+qnorm(pow))^2*2*sig2/mindiff^2
+print(c("n per group", ceiling(N)))
+
+# There is the option of using the longpower library
+library(longpower)
+# liu.liang.linear.power(delta = 0.35,
+                       #)
+
+```
 
 # Dataset Exploration
 We will use the compareGroups library which facilitate comparing for baseline group characteristics and building tables. Let´s do a basic baseline comparation example:

@@ -1,0 +1,50 @@
+# Probability with R
+
+Author: Rafael Sommer
+
+### This script provide information and R scripts that I used to study probability. Also, some of the scripts may be helpful when dealing with bayesian statistics and generating data
+
+### Binomial distribution
+```{r}
+set.seed(1234)
+# Coin flip
+rbinom (n = 1, size = 1, prob = .5) 
+# rbinom generates binomial distributions with:
+# n = number of coins flipped, so:
+rbinom (n = 10, size = 1, prob = .5)
+
+# size = number of coins that should be flipped within each draw, so:
+rbinom (n = 1, size = 4, prob = .5)
+
+# prob = probability of getting a 1 (heads), unfair coin
+rbinom (n = 10, size = 1, prob = .9)
+
+```
+The binomial distribution is represented by the following notation:
+
+$X \sim {\sf Binom}(n, \pi)$ , 
+
+Where $n$ = size and $\pi$ = probability
+
+### Density and cumulative density
+
+dbinom function estimate the probability density for x "sucessess"
+```{r} 
+dbinom (5, 10, 0.5) 
+```
+
+This meaning that is a coin with p = .5 is flipped 10 times, 0.24 of those times there will be 5 (x) sucessess. We can confirm it by simulating 10.000 trials of 10 flips and extracting the mean of the sucessess (given that sucess is 1)
+```{r}
+head(rbinom(10000,10,.5))
+mean (rbinom(10000,10,0.5) == 5)
+```
+
+For cumulative densities we are interested in the probability of at least "q" sucesses
+```{r}
+pbinom(5, 10, 0.5, lower.tail = TRUE)
+```
+This gives us the probability that are AT LEAST 5 sucessess from 10 trials with sucess probability of 0.5. We can also figure the probability of having MORE than 5 sucesses from 10 trials, which is complementary 
+```{r}
+pbinom(5, 10, 0.5, lower.tail = FALSE)
+```
+
