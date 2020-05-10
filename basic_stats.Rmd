@@ -1,0 +1,10 @@
+# Basic Statistics
+
+
+## Variability
+The Sum of Squares is a good measure for variance in a vector, since it is given by how each random variable differes from the mean and square it so all values are positive;
+Sum of squares is given by $SS = \sum(x_{1} - \overline{x})^2$ adding all variability from each value. Therefore, we can assess the mean variability (variance) dividing by 
+N - 1
+$s^2 = \sum \frac{(x_{1} - \overline{x})^2}{N - 1}$
+
+However, variance is given in $unit^2$ which may difficult its interpretation
