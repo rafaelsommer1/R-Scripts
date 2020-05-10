@@ -43,8 +43,11 @@ For cumulative densities we are interested in the probability of at least "q" su
 ```{r}
 pbinom(5, 10, 0.5, lower.tail = TRUE)
 ```
-This gives us the probability that are AT LEAST 5 sucessess from 10 trials with sucess probability of 0.5. We can also figure the probability of having MORE than 5 sucesses from 10 trials, which is complementary 
+This gives us the probability that are 5 sucessess or less from 10 trials with sucess probability of 0.5. We can also figure the probability of having more than 5 sucesses from 10 trials, both are complementary since 
+P(<=5) + P(>5) = 1, because if one happens the other does not.
 ```{r}
 pbinom(5, 10, 0.5, lower.tail = FALSE)
 ```
+
+### Expected values and variance
 

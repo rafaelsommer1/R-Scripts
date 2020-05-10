@@ -108,7 +108,7 @@ power.prop.test(p1 = p1 , p2 = p2 ,
 ## More complex sample size calculations:
 
 ```{r}
-# Sample size calculation for correlated data (nested, longitudinal)
+# Sample size calculation for correlated data (longitudinal)
 N = "x" # Total subjects  
 n = 3 # Number for repeated measures / correlated measures
 sig2within = 0.2 # Variability for the within-subject
