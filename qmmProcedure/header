@@ -1,0 +1,52 @@
+<nifti_image
+  image_offset = '352'
+  ndim = '3'
+  nx = '256'
+  ny = '256'
+  nz = '22'
+  nt = '1'
+  dx = '1.0938'
+  dy = '1.0938'
+  dz = '5.5'
+  dt = '0'
+  datatype = '16'
+  nbyper = '4'
+  scl_slope = '1'
+  scl_inter = '0'
+  intent_code = '0'
+  intent_p1 = '0'
+  intent_p2 = '0'
+  intent_p3 = '0'
+  intent_name = ''
+  toffset = '0'
+  xyz_units = '2'
+  time_units = '8'
+  freq_dim = '0'
+  phase_dim = '0'
+  slice_dim = '0'
+  descrip = 'MRtrix version: 3.0.0'
+  aux_file = ''
+  qform_code = '1'
+  qfac = '-1'
+  quatern_b = '0'
+  quatern_c = '1'
+  quatern_d = '0'
+  qoffset_x = '140.917'
+  qoffset_y = '-111.639'
+  qoffset_z = '-36.5227'
+  sform_code = '1'
+  sto_xyz_matrix = '-1.0938 0 0 140.917 0 1.0938 0 -111.639 0 0 5.5 -36.5227 0 0 0 1'
+  slice_code = '0'
+  slice_start = '0'
+  scl_end = '0'
+  scl_duration = '0'
+# Many fields require codes to be set (e.g. sform_code, qform_code, intent_code)
+# Valid values are:
+#   sform_code (or qform) :- 0=UNKNOWN, 1=SCANNER_ANAT, 2=ALIGNED_ANAT, 3=TALAIRACH, 4=MNI_152
+#   xyz_units :- 1=METER, 2=MM, 3=MICRON 
+#   t_units :- 8=SEC, 16=MSEC, 24=USEC, 32=HZ, 40=PPM, 48=RADS
+#   intent_code :- 0=NONE, 2=CORRELATION, 3=TTEST, 4=FTEST, 5=ZSCORE, 6=CHISQ, ...
+#                  22=PVAL, 23=LOGPVAL, 24=LOG10PVAL, 1001=ESTIMATE, 1002=LABEL (incl masks)
+#                  Other codes can be found in the /usr/local/fsl/src/niftiio/nifti1.h file
+
+/>
